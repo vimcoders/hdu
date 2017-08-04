@@ -19,27 +19,9 @@ using namespace std;
 
 typedef struct trie {
 	map<char, trie*> child;
-
-	int num;
 }trie;
 
 trie *root = NULL;
-
-bool dfs(trie *node) {
-	if (node == NULL || node->num < 0) {
-		return false;
-	}
-	if (node->child.empty() && node->num > 0) {
-		return true;
-	}
-	map<char, trie*>::iterator it;
-	for (it = node->child.begin(); it != node->child.end(); it++) {
-		if (dfs(it->second) == true ) {
-			return true;
-		}
-	}
-	return false;
-}
 
 void insert(const char *str) {
 	if (root == NULL) {
@@ -49,16 +31,13 @@ void insert(const char *str) {
 	for (int i = 0; str[i] != '\0'; i++) {
 		if (node->child[str[i]] != NULL) {
 			node = node->child[str[i]];
-			node->num = 0;
 			continue;
 		}
 		trie *n = new trie;
-		n->num = 0;
 		n->child.clear();
 		node->child[str[i]] = n;
 		node = n;
 	}
-	node->num++;
 }
 
 bool search(const char *str) {
@@ -67,12 +46,12 @@ bool search(const char *str) {
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
-		if (node->num < 0 || node->child[str[i]] == NULL ) {
+		if (node->child[str[i]] == NULL ) {
 			return false;
 		}
 		node = node->child[str[i]];
 	}
-	return dfs(node);
+	return true;
 }
 
 void del(const char *str) {
@@ -86,10 +65,9 @@ void del(const char *str) {
 		}
 		node = node->child[str[i]];
 	}
-	if (node->child.empty()) {
-		return;
+	if (!node->child.empty()) {
+		node->child.clear();
 	}
-	node->num = -1;
 }
 
 int main(void) {
