@@ -45,7 +45,6 @@ bool dfs(trie *node) {
 void insert(const char *str) {
 	if (root == NULL) {
 		root = new trie;
-
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
@@ -58,7 +57,6 @@ void insert(const char *str) {
 		n->num = 0;
 		node->child[str[i]] = n;
 		node = n;
-
 	}
 	node->num++;
 
@@ -66,8 +64,7 @@ void insert(const char *str) {
 
 bool search(const char *str) {
 	if (root == NULL) {
-		root = new trie;
-
+		return;
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
@@ -89,7 +86,6 @@ bool search(const char *str) {
 void del(const char *str) {
 	if (root == NULL) {
 		return;
-
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
@@ -106,9 +102,8 @@ void del(const char *str) {
 
 int main(void) {
 	int n;
+	char str[10], dic[40];
 	while(scanf("%d", &n) != EOF) {
-		char str[10];
-		char dic[40];
 		for (int i = 0; i < n; i++) {
 			scanf("%s", str);
 			scanf("%s", dic);
@@ -123,19 +118,13 @@ int main(void) {
 				}
 				else {
 					printf("No\n");
-
 				}
-
 			}
 			else if (strcmp(str, "delete") == 0) {
 				del(dic);
-
 			}
-
 		}
-
 	}
 
 	return 0;
-
 }
