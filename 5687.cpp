@@ -21,7 +21,6 @@ typedef struct trie {
 	map<char, trie*> child;
 
 	int num;
-
 }trie;
 
 trie *root = NULL;
@@ -50,11 +49,8 @@ void insert(const char *str) {
 	for (int i = 0; str[i] != '\0'; i++) {
 		if (node->child[str[i]] != NULL) {
 			node = node->child[str[i]];
-			if (node->num < 0) {
-				node->num = 0;
-			}
+			node->num = 0;
 			continue;
-
 		}
 		trie *n = new trie;
 		n->num = 0;
@@ -89,6 +85,9 @@ void del(const char *str) {
 		}
 		node = node->child[str[i]];
 	}
+	if (node->child.empty()) {
+		return;
+	}
 	node->num = -1;
 }
 
@@ -115,6 +114,5 @@ int main(void) {
 			}
 		}
 	}
-
 	return 0;
 }
