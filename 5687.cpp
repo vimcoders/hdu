@@ -49,13 +49,14 @@ bool search(const char *str) {
 		return false;
 	}
 	trie *node = root;
+	int value = 0;
 	for (int i = 0; str[i] != '\0'; i++) {
 		if (node->child[str[i]] == NULL ) {
 			return false;
 		}
 		node = node->child[str[i]];
 	}
-	return node->v != 0;
+	return node->v > 0;
 }
 
 void del(const char *str) {
@@ -69,8 +70,13 @@ void del(const char *str) {
 		}
 		node = node->child[str[i]];
 	}
-	node->v = 0;
+	int value = node->v;
 	node->child.clear();
+	node = root;
+	for (int i = 0; str[i] != '\0'; i++) {
+		node = node->child[str[i]];
+		node->v -= value;
+	}
 }
 
 int main(void) {
