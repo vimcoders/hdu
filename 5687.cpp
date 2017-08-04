@@ -50,6 +50,9 @@ void insert(const char *str) {
 	for (int i = 0; str[i] != '\0'; i++) {
 		if (node->child[str[i]] != NULL) {
 			node = node->child[str[i]];
+			if (node->num < 0) {
+				node->num = 0;
+			}
 			continue;
 
 		}
@@ -59,7 +62,6 @@ void insert(const char *str) {
 		node = n;
 	}
 	node->num++;
-
 }
 
 bool search(const char *str) {
@@ -68,19 +70,12 @@ bool search(const char *str) {
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
-		if (node->num < 0) {
+		if (node->num < 0 || node->child[str[i]] == NULL ) {
 			return false;
-
-		}
-		if (node->child[str[i]] == NULL) {
-			return false;
-
 		}
 		node = node->child[str[i]];
-
 	}
 	return dfs(node);
-
 }
 
 void del(const char *str) {
@@ -89,15 +84,12 @@ void del(const char *str) {
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
-		if (node == NULL) {
+		if (node->child[str[i]] == NULL) {
 			return;
-
 		}
 		node = node->child[str[i]];
-
 	}
 	node->num = -1;
-
 }
 
 int main(void) {
@@ -109,12 +101,10 @@ int main(void) {
 			scanf("%s", dic);
 			if (strcmp(str, "insert") == 0) {
 				insert(dic);
-
 			}
 			else if (strcmp(str, "search") == 0) {
 				if (search(dic) == true) {
 					printf("Yes\n");
-
 				}
 				else {
 					printf("No\n");
