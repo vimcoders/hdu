@@ -64,7 +64,7 @@ void insert(const char *str) {
 
 bool search(const char *str) {
 	if (root == NULL) {
-		return;
+		return false;
 	}
 	trie *node = root;
 	for (int i = 0; str[i] != '\0'; i++) {
