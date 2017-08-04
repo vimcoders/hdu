@@ -19,6 +19,8 @@ using namespace std;
 
 typedef struct trie {
 	map<char, trie*> child;
+
+	int v;
 }trie;
 
 trie *root = NULL;
@@ -31,9 +33,11 @@ void insert(const char *str) {
 	for (int i = 0; str[i] != '\0'; i++) {
 		if (node->child[str[i]] != NULL) {
 			node = node->child[str[i]];
+			node->v++;
 			continue;
 		}
 		trie *n = new trie;
+		n->v = 1;
 		n->child.clear();
 		node->child[str[i]] = n;
 		node = n;
@@ -51,7 +55,7 @@ bool search(const char *str) {
 		}
 		node = node->child[str[i]];
 	}
-	return true;
+	return node->v != 0;
 }
 
 void del(const char *str) {
@@ -65,9 +69,8 @@ void del(const char *str) {
 		}
 		node = node->child[str[i]];
 	}
-	if (!node->child.empty()) {
-		node->child.clear();
-	}
+	node->v = 0;
+	node->child.clear();
 }
 
 int main(void) {
