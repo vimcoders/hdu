@@ -54,6 +54,7 @@ void insert(const char *str) {
 		}
 		trie *n = new trie;
 		n->num = 0;
+		n->child.clear();
 		node->child[str[i]] = n;
 		node = n;
 	}
