@@ -14,7 +14,9 @@ class BinarySearchNode
 
 BinarySearchNode::BinarySearchNode(int v) 
 {
-	Value = v;
+	this->Value = v;
+	this->Left = NULL;
+	this->Right = NULL;
 }
 
 BinarySearchNode::~BinarySearchNode()
